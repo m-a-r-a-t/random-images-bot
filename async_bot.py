@@ -3,7 +3,11 @@ from telebot.async_telebot import AsyncTeleBot
 from telebot import types
 import os
 import random
-BOT_TOKEN = "BOT_TOKEN"
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 bot = AsyncTeleBot(BOT_TOKEN, parse_mode=None)
 now_users = {}
