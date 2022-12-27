@@ -40,6 +40,8 @@ def get_random_video():
 
 @bot.message_handler(commands=['start', 'help'])
 async def send_welcome(message):
+    with open("users.txt", "a") as myfile:
+        myfile.write(f"{message.chat.id} {message.text}\n")
     await bot.send_message(message.chat.id, """Привет! Давай посмотрим, что тебя ждет в следующем году.
 Нажми на кнопку для получения своего печенья с предсказанием❄️""", reply_markup=markup)
 
@@ -48,7 +50,8 @@ async def send_welcome(message):
 async def send_random_video(message):
     try:
         ok = throttling(message.chat.id)
-
+        with open("users.txt", "a") as myfile:
+            myfile.write(f"{message.chat.id} {message.text}\n")
         if not ok:
             return
 

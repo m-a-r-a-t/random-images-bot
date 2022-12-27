@@ -5,7 +5,7 @@ __pycache__/
 videos
 # C extensions
 *.so
-
+users.txt
 # Distribution / packaging
 .Python
 build/
