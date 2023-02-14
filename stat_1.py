@@ -34,7 +34,7 @@ def send_welcome(message):
         bot.send_message(message.chat.id,  f"Пользователей: {count}")
     except Exception as e:
         print(e)
-        bot.send_message(message.chat.id,  f"Что-то пошло не так...")
+        bot.send_message(message.chat.id,  f"Что-то пошло не так...{str(e)}")
 
 
 bot.infinity_polling()
