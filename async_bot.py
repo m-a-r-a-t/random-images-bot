@@ -4,7 +4,9 @@ from telebot import types
 import os
 import random
 from dotenv import load_dotenv
+from text import Txt
 
+txt = Txt()
 load_dotenv()
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
@@ -13,7 +15,7 @@ bot = AsyncTeleBot(BOT_TOKEN, parse_mode=None)
 now_users = {}
 
 markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-btn = types.KeyboardButton('Жду предсказание ❄️')
+btn = types.KeyboardButton(txt.wait_btn)
 markup.add(btn)
 
 
@@ -42,11 +44,10 @@ def get_random_video():
 async def send_welcome(message):
     with open("users.txt", "a") as myfile:
         myfile.write(f"{message.chat.id} {message.text}\n")
-    await bot.send_message(message.chat.id, """Привет! Давай посмотрим, что тебя ждет в следующем году.
-Нажми на кнопку для получения своего печенья с предсказанием❄️""", reply_markup=markup)
+    await bot.send_message(message.chat.id, txt.start_msg, reply_markup=markup)
 
 
-@bot.message_handler(regexp="(Жду предсказание ❄️|Жду предсказание|Жду предсказание❄️)")
+@bot.message_handler(regexp=txt.main_handler_regx)
 async def send_random_video(message):
     try:
         ok = throttling(message.chat.id)
@@ -56,7 +57,7 @@ async def send_random_video(message):
             return
 
         video = get_random_video()
-        preview = await bot.send_message(message.chat.id, "Секундочку! Заглядываем в будущее...", reply_markup=markup)
+        preview = await bot.send_message(message.chat.id, txt.preview_msg, reply_markup=markup)
         await bot.send_video(message.chat.id, video, reply_markup=markup)
         video.close()
 
