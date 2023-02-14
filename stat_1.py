@@ -11,7 +11,7 @@ def get_count_users():
     all_users_records = []
     with open("users.txt", "r") as fin:
         for line in fin:
-            match = re.findall(r'Жду свою валентинку', line)[0]
+            match = re.findall(r'Жду свою валентинку', line)
             if len(match) > 0:
                 line = line.split(' ')[0]
                 all_users_records.append(line)
