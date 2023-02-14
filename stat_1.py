@@ -32,7 +32,8 @@ def send_welcome(message):
     try:
         count = get_count_users()
         bot.send_message(message.chat.id,  f"Пользователей: {count}")
-    except:
+    except Exception as e:
+        print(e)
         bot.send_message(message.chat.id,  f"Что-то пошло не так...")
 
 
